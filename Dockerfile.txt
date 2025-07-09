@@ -1,0 +1,20 @@
+# اختر صورة أساسية من Docker Hub
+FROM python:3.9-slim
+
+# تعيين مجلد العمل داخل الحاوية
+WORKDIR /app
+
+# نسخ متطلبات المشروع إلى الحاوية (ستحتاج إلى إنشاء requirements.txt في الخطوة التالية)
+COPY requirements.txt /app/
+
+# تثبيت المتطلبات باستخدام pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# نسخ جميع الملفات إلى الحاوية
+COPY . /app/
+
+# تعيين المنفذ الذي سيعمل عليه التطبيق
+EXPOSE 5000
+
+# تشغيل تطبيق Flask
+CMD ["python", "app.py"]
