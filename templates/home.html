@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الفندق</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>قائمة الغرف</h1>
+    <a href="{{ url_for('add_room') }}">إضافة غرفة جديدة</a>
+    <form method="POST">
+        <input type="text" name="search" placeholder="ابحث عن غرفة برقم الغرفة" required>
+        <button type="submit">بحث</button>
+    </form>
+    <table border="1">
+        <tr>
+            <th>رقم الغرفة</th>
+            <th>نوع الغرفة</th>
+            <th>السعر</th>
+            <th>التوفر</th>
+            <th>الإجراءات</th>
+        </tr>
+        {% for room in rooms %}
+        <tr>
+            <td>{{ room.room_number }}</td>
+            <td>{{ room.room_type }}</td>
+            <td>{{ room.price }}</td>
+            <td>{{ 'متاح' if room.availability else 'غير متاح' }}</td>
+            <td>
+                <a href="{{ url_for('edit_room', id=room.id) }}">تعديل</a> | 
+                <a href="{{ url_for('delete_room', id=room.id) }}" onclick="return confirm('هل أنت متأكد من حذف هذه الغرفة؟')">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
